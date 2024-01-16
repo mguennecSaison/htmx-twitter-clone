@@ -12,7 +12,5 @@ block content
           button.btn.btn-primary.text-center(type="submit") Tweet
   div
   #timeline(hx-get="/posts" hx-trigger="load, every 60s")
-  script(src="https://unpkg.com/htmx.org@1.9.5")
+block script
   script(src="https://unpkg.com/htmx.org@1.9.5/dist/ext/ws.js")
-  script(src="https://unpkg.com/hyperscript.org@0.9.12")
-  script(src="/js/main.js")
