@@ -6,7 +6,7 @@ You can view the live demo [here](https://htmx-twitter.herokuapp.com)
 ## Usage
 Clone this repo, install dependencies and start the server.
 ```
-git clone https://github.com/rajasegar/htmx-twitter-clone
+git clone https://github.com/mguennecSaison/htmx-twitter-clone
 cd htmx-twitter-clone
 npm install
 npm start
