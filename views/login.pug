@@ -1,0 +1,7 @@
+extends layout/main.pug
+block navbar
+  span.navbar-text.text-white  Login
+block content
+  form(hx-post="/login")
+    p.text-center.mt-2
+      button.btn.btn-primary.text-center(type="submit") Login
