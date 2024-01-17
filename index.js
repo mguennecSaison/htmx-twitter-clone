@@ -56,12 +56,12 @@ app.post("/login", (req, res) => {
   res.setHeader("HX-Redirect", "/").sendStatus(302);
 });
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   const jwt = getJWT(req);
   if (!jwt) {
     res.setHeader("HX-Redirect", "/login").redirect("/login");
   } else {
-    res.locals.user = jwt
+    res.locals.user = jwt;
     next();
   }
 });
@@ -75,14 +75,14 @@ app.get("/posts", (req, res) => {
   res.render("components/posts", { tweets });
 });
 
-app.ws("/tweet", function (ws, req, res) {
+app.ws("/tweet", (ws, req, res) => {
   ws.on("message", function (msg) {
     const username = getJWT(req)?.username;
     if (username) {
       const { message } = JSON.parse(msg);
       addTweet(message, username);
     } else {
-      ws.send(JSON.stringify({HEADERS: {'HX-Redirect': '/login'}}))
+      ws.send(JSON.stringify({ HEADERS: { "HX-Redirect": "/login" } }));
     }
   });
 });
