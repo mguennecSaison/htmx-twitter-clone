@@ -59,16 +59,20 @@ app.post("/login", (req, res) => {
 app.use((req, res, next) => {
   const jwt = getJWT(req);
   if (!jwt) {
-    res.setHeader("HX-Redirect", "/login").redirect("/login");
+    res.setHeader("HX-Redirect", "/login");
   } else {
     res.locals.user = jwt;
-    next();
   }
+  next();
 });
 
 app.get("/", (req, res) => {
-  const { username } = res.locals.user;
-  res.render("index", { name: username, tweets });
+  const username = res.locals.user?.username;
+  if (username) {
+    res.render("index", { name: username, tweets });
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.get("/posts", (req, res) => {
@@ -95,7 +99,7 @@ app.post("/like/:id", (req, res) => {
   const likes = pug.compileFile("views/components/likes.pug");
   const markup = likes({ t: tweet });
   tweetChannel.clients.forEach((client) => client.send(markup));
-  res.send(markup);
+  res.sendStatus(200);
 });
 
 app.post("/retweet/:id", (req, res) => {
@@ -106,7 +110,7 @@ app.post("/retweet/:id", (req, res) => {
   const retweets = pug.compileFile("views/components/retweets.pug");
   const markup = retweets({ t: tweet });
   tweetChannel.clients.forEach((client) => client.send(markup));
-  res.send(markup);
+  res.sendStatus(200);
 });
 
 app.listen(PORT);
